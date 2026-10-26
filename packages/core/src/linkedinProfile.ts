@@ -2341,13 +2341,19 @@ async function extractProfileData(
       const nameSelectors = [
         "h1.text-heading-xlarge",
         "h1[class*='text-heading']",
-        "h1"
+        "h1",
+        "h2.text-heading-xlarge",
+        "h2[class*='text-heading']",
+        "main h2"
       ];
       const fullName = pickText(nameSelectors);
       const nameElement =
         globalThis.document.querySelector("h1.text-heading-xlarge") ??
         globalThis.document.querySelector("h1[class*='text-heading']") ??
-        globalThis.document.querySelector("h1");
+        globalThis.document.querySelector("h1") ??
+        globalThis.document.querySelector("h2.text-heading-xlarge") ??
+        globalThis.document.querySelector("h2[class*='text-heading']") ??
+        globalThis.document.querySelector("main h2");
       const headerContainer =
         nameElement?.closest(".pv-text-details__left-panel") ??
         nameElement?.parentElement?.parentElement ??

@@ -172,7 +172,9 @@ function extractCompanySlug(url: string): string | null {
 
 async function waitForCompanyPageReady(page: Page): Promise<void> {
   await page
-    .locator("main h1")
+    .locator(
+      "main h1, main h2, [role='heading'][aria-level='1'], [role='heading'][aria-level='2']"
+    )
     .first()
     .waitFor({ state: "visible", timeout: 10_000 })
     .catch(() => undefined);
@@ -581,7 +583,7 @@ async function extractCompanyPageData(page: Page): Promise<
         ? `https://www.linkedin.com/company/${encodeURIComponent(slug)}/about/`
         : companyUrl,
       slug,
-      name: normalize(main?.querySelector("h1")?.textContent),
+      name: normalize(main?.querySelector("h1, h2")?.textContent),
       industry,
       location,
       follower_count: followerCount,

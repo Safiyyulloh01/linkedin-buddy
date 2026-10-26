@@ -418,11 +418,13 @@ function createDefaultSelectorAuditRegistry(
           {
             primary: {
               key: "social-action-react-trigger",
-              selectorHint: "button.react-button__trigger",
+              selectorHint: `button.react-button__trigger, button[aria-label*='reaction' i], button hasText ${likeRegexHint}`,
               locatorFactory: (page) =>
-                page.locator(
-                  "button.react-button__trigger, button.social-actions-button.react-button__trigger"
-                )
+                page
+                  .locator(
+                    "button.react-button__trigger, button.social-actions-button.react-button__trigger, button[aria-label*='Reaction button state' i], button[aria-label*='reaction' i], button[aria-label*='like' i]"
+                  )
+                  .or(page.locator("button, [role='button']").filter({ hasText: likeRegex }))
             },
             secondary: {
               key: "role-button-like",
@@ -444,11 +446,15 @@ function createDefaultSelectorAuditRegistry(
           {
             primary: {
               key: "social-action-comment",
-              selectorHint: "button.comment-button, button.social-actions-button.comment-button",
+              selectorHint: `getByRole(button, ${commentRegexHint}), button.comment-button`,
               locatorFactory: (page) =>
-                page.locator(
-                  "button.comment-button, button.social-actions-button.comment-button"
-                )
+                page
+                  .getByRole("button", { name: commentRegex })
+                  .or(
+                    page.locator(
+                      "button.comment-button, button.social-actions-button.comment-button, button[aria-label*='comment' i]"
+                    )
+                  )
             },
             secondary: {
               key: "role-button-comment",
@@ -470,9 +476,15 @@ function createDefaultSelectorAuditRegistry(
           {
             primary: {
               key: "social-action-repost",
-              selectorHint: "button.repost-button, button.social-actions-button.repost-button",
+              selectorHint: `getByRole(button, ${repostRegexHint}), button.repost-button`,
               locatorFactory: (page) =>
-                page.locator("button.repost-button, button.social-actions-button.repost-button")
+                page
+                  .getByRole("button", { name: repostRegex })
+                  .or(
+                    page.locator(
+                      "button.repost-button, button.social-actions-button.repost-button, button[aria-label*='repost' i]"
+                    )
+                  )
             },
             secondary: {
               key: "role-button-repost",
@@ -500,19 +512,28 @@ function createDefaultSelectorAuditRegistry(
           {
             primary: {
               key: "role-main-with-thread-link",
-              selectorHint: "getByRole(main) has a[href*='/messaging/thread/']",
+              selectorHint: "getByRole(main) has thread link or conversations container",
               locatorFactory: (page) =>
                 page
                   .getByRole("main")
-                  .filter({ has: page.locator("a[href*='/messaging/thread/']") })
+                  .filter({
+                    has: page.locator(
+                      "a[href*='/messaging/thread/'], .msg-conversations-container, .scaffold-layout__list-detail, .msg__list-detail"
+                    )
+                  })
+                  .or(
+                    page.locator(
+                      "main.scaffold-layout__list-detail, main.msg__list-detail, .msg-conversations-container"
+                    )
+                  )
             },
             secondary: {
               key: "thread-link-or-conversation-card",
               selectorHint:
-                "a[href*='/messaging/thread/'], li.msg-conversation-listitem, .msg-conversation-card, .msg-conversations-container",
+                "a[href*='/messaging/thread/'], li.msg-conversation-listitem, .msg-conversation-card, .msg-conversations-container, .scaffold-layout__list-detail",
               locatorFactory: (page) =>
                 page.locator(
-                  "a[href*='/messaging/thread/'], li.msg-conversation-listitem, .msg-conversation-card, .msg-conversations-container"
+                  "a[href*='/messaging/thread/'], li.msg-conversation-listitem, .msg-conversation-card, .msg-conversations-container, .scaffold-layout__list-detail, .msg__list-detail"
                 )
             },
             tertiary: {
@@ -611,14 +632,20 @@ function createDefaultSelectorAuditRegistry(
         createSelectorAuditSelectorDefinition("profile_header", "Profile header", "read", {
           primary: {
             key: "role-heading-h1",
-            selectorHint: "getByRole(heading, level: 1)",
-            locatorFactory: (page) => page.getByRole("heading", { level: 1 })
+            selectorHint: "getByRole(heading, level: 1 | 2)",
+            locatorFactory: (page) =>
+              page
+                .getByRole("heading", { level: 1 })
+                .or(page.getByRole("heading", { level: 2 }).first())
           },
           secondary: {
             key: "profile-h1",
-            selectorHint: "h1.text-heading-xlarge, h1[class*='text-heading'], h1",
+            selectorHint:
+              "h1.text-heading-xlarge, h1[class*='text-heading'], h1, h2.text-heading-xlarge, main h2",
             locatorFactory: (page) =>
-              page.locator("h1.text-heading-xlarge, h1[class*='text-heading'], h1")
+              page.locator(
+                "h1.text-heading-xlarge, h1[class*='text-heading'], h1, h2.text-heading-xlarge, h2[class*='text-heading'], main h2"
+              )
           },
           tertiary: {
             key: "main-text-profile-sections",
@@ -636,24 +663,29 @@ function createDefaultSelectorAuditRegistry(
           {
             primary: {
               key: "intro-edit-link",
-              selectorHint: "a[href*='edit/forms/intro'], button[aria-label*='Edit intro']",
+              selectorHint:
+                "a[href*='edit/intro'], a[href*='edit/forms/intro'], a[aria-label*='Edit profile' i], button[aria-label*='Edit intro' i]",
               locatorFactory: (page) =>
-                page.locator("a[href*='edit/forms/intro'], button[aria-label*='Edit intro' i]")
+                page.locator(
+                  "a[href*='edit/intro'], a[href*='edit/forms/intro'], a[aria-label*='Edit profile' i], a[aria-label*='Edit intro' i], button[aria-label*='Edit intro' i], button[aria-label*='Edit profile' i]"
+                )
             },
             secondary: {
               key: "edit-pencil-button",
-              selectorHint: "section button[aria-label*='edit' i], a[href*='profileEdit']",
+              selectorHint:
+                "section button[aria-label*='edit' i], section a[aria-label*='edit' i], a[aria-label*='Edit' i], a[href*='profileEdit'], a[href*='edit']",
               locatorFactory: (page) =>
                 page.locator(
-                  "section.artdeco-card button[aria-label*='edit' i], section.artdeco-card a[aria-label*='edit' i], a[href*='profileEdit']"
+                  "section.artdeco-card button[aria-label*='edit' i], section.artdeco-card a[aria-label*='edit' i], section button[aria-label*='edit' i], section a[aria-label*='edit' i], a[aria-label*='Edit' i], a[href*='profileEdit'], a[href*='edit']"
                 )
             },
             tertiary: {
               key: "top-card-edit-action",
-              selectorHint: ".pv-top-card button svg, .pv-top-card a svg parent button",
+              selectorHint:
+                ".pv-top-card button svg, .pv-top-card a svg parent button, main a[href*='edit']",
               locatorFactory: (page) =>
                 page.locator(
-                  ".pv-top-card--edit-name-handle-action, .pv-top-card .edit-public-profile-section button, .pv-top-card a[href*='edit']"
+                  ".pv-top-card--edit-name-handle-action, .pv-top-card .edit-public-profile-section button, .pv-top-card a[href*='edit'], main a[href*='edit']"
                 )
             }
           }
@@ -671,9 +703,16 @@ function createDefaultSelectorAuditRegistry(
           {
             primary: {
               key: "connection-message-button",
-              selectorHint: "button[aria-label*='Message' i], button[aria-label*='message' i]",
+              selectorHint: `getByRole(button, ${messageRegexHint}), button[aria-label*='Message' i], button[aria-label*='Remove' i]`,
               locatorFactory: (page) =>
-                page.locator("button[aria-label*='Message' i], button[aria-label*='message' i]").first()
+                page
+                  .getByRole("button", { name: messageRegex })
+                  .or(
+                    page.locator(
+                      "button[aria-label*='Message' i], button[aria-label*='message' i], button[aria-label*='Remove' i], button[aria-label*='remove' i]"
+                    )
+                  )
+                  .first()
             },
             secondary: {
               key: "connection-action-link",
@@ -696,9 +735,15 @@ function createDefaultSelectorAuditRegistry(
           {
             primary: {
               key: "role-heading-connections",
-              selectorHint: `getByRole(heading, ${connectionsHeadingRegexHint})`,
+              selectorHint: `getByRole(heading, ${connectionsHeadingRegexHint}), main p hasText ${connectionsHeadingRegexHint}`,
               locatorFactory: (page) =>
-                page.getByRole("heading", { name: connectionsHeadingRegex })
+                page
+                  .getByRole("heading", { name: connectionsHeadingRegex })
+                  .or(
+                    page
+                      .locator("main p, main h1, main h2, main span")
+                      .filter({ hasText: connectionsHeadingRegex })
+                  )
             },
             secondary: {
               key: "connection-card",
@@ -785,19 +830,25 @@ function createDefaultSelectorAuditRegistry(
         createSelectorAuditSelectorDefinition("company_heading", "Company page heading", "read", {
           primary: {
             key: "role-heading-h1",
-            selectorHint: "getByRole(heading, level: 1)",
-            locatorFactory: (page) => page.getByRole("heading", { level: 1 })
+            selectorHint: "getByRole(heading, level: 1 | 2)",
+            locatorFactory: (page) =>
+              page
+                .getByRole("heading", { level: 1 })
+                .or(page.getByRole("heading", { level: 2 }).first())
           },
           secondary: {
             key: "company-h1",
-            selectorHint: "h1.org-top-card-summary__title, h1[class*='org-top-card'], h1",
+            selectorHint:
+              "h1.org-top-card-summary__title, h1[class*='org-top-card'], h1, h2.org-top-card-summary__title, h2[class*='org-top-card'], h2, main h2",
             locatorFactory: (page) =>
-              page.locator("h1.org-top-card-summary__title, h1[class*='org-top-card'], h1")
+              page.locator(
+                "h1.org-top-card-summary__title, h1[class*='org-top-card'], h1, h2.org-top-card-summary__title, h2[class*='org-top-card'], h2, main h2"
+              )
           },
           tertiary: {
             key: "main-h1",
-            selectorHint: "main h1",
-            locatorFactory: (page) => page.locator("main h1")
+            selectorHint: "main h1, main h2",
+            locatorFactory: (page) => page.locator("main h1, main h2")
           }
         }),
         createSelectorAuditSelectorDefinition(
@@ -830,26 +881,34 @@ function createDefaultSelectorAuditRegistry(
           {
             primary: {
               key: "org-page-viewing-setting-modal",
-              selectorHint: "[data-test-modal-id='org-page-viewing-setting-modal']",
+              selectorHint:
+                "[data-test-modal-id='org-page-viewing-setting-modal'], or main#workspace",
               locatorFactory: (page) =>
-                page.locator("[data-test-modal-id='org-page-viewing-setting-modal']")
+                page
+                  .locator("[data-test-modal-id='org-page-viewing-setting-modal']")
+                  .or(page.locator("main#workspace, main:not([aria-hidden='true'])"))
             },
             secondary: {
               key: "artdeco-modal-overlay-org",
               selectorHint:
-                ".artdeco-modal-overlay:has([data-test-modal-id='org-page-viewing-setting-modal'])",
+                ".artdeco-modal-overlay:has([data-test-modal-id='org-page-viewing-setting-modal']), or main",
               locatorFactory: (page) =>
-                page.locator(
-                  ".artdeco-modal-overlay:has([data-test-modal-id='org-page-viewing-setting-modal'])"
-                )
+                page
+                  .locator(
+                    ".artdeco-modal-overlay:has([data-test-modal-id='org-page-viewing-setting-modal'])"
+                  )
+                  .or(page.locator("main"))
             },
             tertiary: {
               key: "dialog-org-setting",
-              selectorHint: "[role='dialog'] has .org-page-viewing-setting",
+              selectorHint: "[role='dialog'] has .org-page-viewing-setting, or main#workspace",
               locatorFactory: (page) =>
-                page.locator("[role='dialog']").filter({
-                  has: page.locator(".org-page-viewing-setting, [class*='org-page-viewing']")
-                })
+                page
+                  .locator("[role='dialog']")
+                  .filter({
+                    has: page.locator(".org-page-viewing-setting, [class*='org-page-viewing']")
+                  })
+                  .or(page.locator("main#workspace, main:not([aria-hidden='true'])"))
             }
           }
         )

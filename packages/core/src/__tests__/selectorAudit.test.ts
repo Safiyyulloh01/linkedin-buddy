@@ -1,3 +1,4 @@
+import "../platform.js";
 import { stat } from "node:fs/promises";
 import { errors as playwrightErrors, type Page } from "playwright-core";
 import { afterEach, describe, expect, it } from "vitest";
