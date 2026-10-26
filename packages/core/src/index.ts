@@ -1,3 +1,5 @@
+import "./platform.js";
+export * from "./platform.js";
 export * from "./artifacts.js";
 export * from "./activityDiff.js";
 export * from "./activityPoller.js";

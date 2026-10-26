@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import lockfile from "proper-lockfile";
@@ -132,9 +133,22 @@ export class ProfileManager {
         headless: fixtureReplayEnabled ? true : (options.headless ?? true),
       };
 
-      const executablePath = process.env.PLAYWRIGHT_EXECUTABLE_PATH;
+      const executablePath =
+        process.env.PLAYWRIGHT_EXECUTABLE_PATH ||
+        process.env.CHROMIUM_PATH ||
+        (existsSync("/data/data/com.termux/files/usr/bin/chromium-browser")
+          ? "/data/data/com.termux/files/usr/bin/chromium-browser"
+          : undefined);
       if (executablePath) {
         launchOptions.executablePath = executablePath;
+      }
+
+      if (existsSync("/data/data/com.termux")) {
+        const extraArgs = ["--no-sandbox", "--disable-gpu"];
+        const currentArgs = Array.isArray(launchOptions.args)
+          ? launchOptions.args
+          : [];
+        launchOptions.args = Array.from(new Set([...currentArgs, ...extraArgs]));
       }
 
       // Apply stored browser fingerprint (viewport, locale, timezone, user

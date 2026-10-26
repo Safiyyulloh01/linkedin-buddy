@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+if (typeof process !== "undefined" && process.platform === "android") {
+  Object.defineProperty(process, "platform", { value: "linux" });
+}
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import packageJson from "../../package.json" with { type: "json" };

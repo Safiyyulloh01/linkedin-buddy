@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+if (typeof process !== "undefined" && process.platform === "android") {
+  Object.defineProperty(process, "platform", { value: "linux" });
+}
 import type { Dirent } from "node:fs";
 import { spawn } from "node:child_process";
 import { existsSync, realpathSync } from "node:fs";
