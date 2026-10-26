@@ -14,7 +14,7 @@
   <a href="https://modelcontextprotocol.io/"><img src="https://img.shields.io/badge/MCP-compatible-1f6feb" alt="MCP compatible" /></a>
   <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node-22%2B-339933?logo=node.js&logoColor=white" alt="Node.js 22+" /></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&logoColor=white" alt="TypeScript strict" /></a>
-  <a href="#license"><img src="https://img.shields.io/badge/License-pending-lightgrey" alt="License pending" /></a>
+  <a href="#license"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License MIT" /></a>
 </p>
 
 <p align="center">
@@ -359,7 +359,7 @@ Find it useful? Star the repo. Find a bug? Open an issue. Have a better approach
 
 ## License
 
-License: pending repository selection.
+This project is licensed under the [MIT License](./LICENSE).
 
 Built with [Playwright](https://playwright.dev/), [Commander](https://github.com/tj/commander.js), [better-sqlite3](https://github.com/WiseLibs/better-sqlite3), and the [Model Context Protocol SDK](https://modelcontextprotocol.io/).
 

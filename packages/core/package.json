@@ -2,6 +2,7 @@
   "name": "@linkedin-buddy/core",
   "version": "0.1.0",
   "description": "TypeScript LinkedIn automation library and shared local runtime for Playwright-backed LinkedIn workflows.",
+  "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,13 +20,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sigvardt/linkedin-buddy.git",
+    "url": "git+https://github.com/Safiyyulloh01/linkedin-buddy.git",
     "directory": "packages/core"
   },
   "bugs": {
-    "url": "https://github.com/sigvardt/linkedin-buddy/issues"
+    "url": "https://github.com/Safiyyulloh01/linkedin-buddy/issues"
   },
-  "homepage": "https://github.com/sigvardt/linkedin-buddy/tree/main/packages/core",
+  "homepage": "https://github.com/Safiyyulloh01/linkedin-buddy/tree/main/packages/core",
   "author": "Joakim Sigvardt (https://github.com/sigvardt)",
   "keywords": [
     "linkedin",

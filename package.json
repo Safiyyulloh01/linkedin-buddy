@@ -2,15 +2,16 @@
   "name": "linkedin-buddy",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "description": "Open-source LinkedIn MCP server, LinkedIn CLI, and TypeScript automation toolkit for inbox, search, feed, jobs, profile, and safe confirmed actions.",
   "type": "module",
-  "homepage": "https://github.com/sigvardt/linkedin-buddy/tree/main/docs",
+  "homepage": "https://github.com/Safiyyulloh01/linkedin-buddy/tree/main/docs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sigvardt/linkedin-buddy.git"
+    "url": "git+https://github.com/Safiyyulloh01/linkedin-buddy.git"
   },
   "bugs": {
-    "url": "https://github.com/sigvardt/linkedin-buddy/issues"
+    "url": "https://github.com/Safiyyulloh01/linkedin-buddy/issues"
   },
   "keywords": [
     "linkedin",
@@ -40,6 +41,7 @@
     "packages/*"
   ],
   "scripts": {
+    "verify": "npm run lint && npm run typecheck && npm run build",
     "lint": "eslint .",
     "scan:security:head": "gitleaks detect --no-banner --no-git --source .",
     "scan:security:history": "gitleaks detect --no-banner --source .",

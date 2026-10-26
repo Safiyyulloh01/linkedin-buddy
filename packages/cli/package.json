@@ -2,6 +2,7 @@
   "name": "@linkedin-buddy/cli",
   "version": "0.1.0",
   "description": "LinkedIn CLI for search, inbox, feed, jobs, profile, notifications, and safe prepare-and-confirm LinkedIn actions.",
+  "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -18,13 +19,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sigvardt/linkedin-buddy.git",
+    "url": "git+https://github.com/Safiyyulloh01/linkedin-buddy.git",
     "directory": "packages/cli"
   },
   "bugs": {
-    "url": "https://github.com/sigvardt/linkedin-buddy/issues"
+    "url": "https://github.com/Safiyyulloh01/linkedin-buddy/issues"
   },
-  "homepage": "https://github.com/sigvardt/linkedin-buddy/tree/main/packages/cli",
+  "homepage": "https://github.com/Safiyyulloh01/linkedin-buddy/tree/main/packages/cli",
   "author": "Joakim Sigvardt (https://github.com/sigvardt)",
   "keywords": [
     "linkedin",
