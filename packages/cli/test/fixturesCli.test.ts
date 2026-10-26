@@ -156,7 +156,8 @@ describe("linkedin fixtures commands", () => {
 
   it("supports the fixtures:check alias and scoped set validation", async () => {
     const manifestPath = path.join(tempDir, "manifest.json");
-    await writeJsonFixture(manifestPath, createReplayManifest("2026-03-08T00:00:00.000Z", "manual"));
+    const recentDate = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    await writeJsonFixture(manifestPath, createReplayManifest(recentDate, "manual"));
 
     await runCli([
       "node",
